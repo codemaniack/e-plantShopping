@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  items: [], // Array of cart items
-  totalQuantity: 0, // Total number of items in the cart
+  items: [],
+  totalQuantity: 0,
 };
 
 const cartSlice = createSlice({
@@ -10,28 +10,27 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addItem: (state, action) => {
-      const item = state.items.find((i) => i.name === action.payload.name);
-      if (item) {
-        item.quantity += 1;
+      const existingItem = state.items.find((item) => item.name === action.payload.name);
+      if (existingItem) {
+        existingItem.quantity += 1;
       } else {
         state.items.push({ ...action.payload, quantity: 1 });
       }
-      state.totalQuantity += 1; // Increment total quantity
+      state.totalQuantity += 1;
     },
     updateQuantity: (state, action) => {
       const { name, quantity } = action.payload;
-      const item = state.items.find((i) => i.name === name);
-      if (item) {
-        const quantityDiff = quantity - item.quantity;
-        item.quantity = quantity;
-        state.totalQuantity += quantityDiff; // Adjust total quantity
+      const existingItem = state.items.find((item) => item.name === name);
+      if (existingItem) {
+        state.totalQuantity += quantity - existingItem.quantity;
+        existingItem.quantity = quantity;
       }
     },
     removeItem: (state, action) => {
-      const itemIndex = state.items.findIndex((i) => i.name === action.payload);
+      const itemIndex = state.items.findIndex((item) => item.name === action.payload);
       if (itemIndex >= 0) {
-        state.totalQuantity -= state.items[itemIndex].quantity; // Deduct quantity from total
-        state.items.splice(itemIndex, 1); // Remove item
+        state.totalQuantity -= state.items[itemIndex].quantity;
+        state.items.splice(itemIndex, 1);
       }
     },
   },
