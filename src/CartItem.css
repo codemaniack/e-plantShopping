@@ -241,3 +241,13 @@
     margin-top: 40px;
   }
   
+  .cart{
+    position: relative;
+  }
+
+  .cart-count-quantity{
+    position: absolute;
+    left: 25px;
+    top: 15px;
+    font-size: 2rem;
+  }
